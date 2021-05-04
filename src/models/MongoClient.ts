@@ -9,7 +9,7 @@ const getMongoClient = async () => {
 class Mongo {
     static client: Promise<MongoClient>
     constructor() {
-        logger.error('Use Mongo.getClient()')
+        logger.error('Use Mongo.getClient()');
     }
     static getClient() {
         if (!Mongo.client) {

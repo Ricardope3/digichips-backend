@@ -1,5 +1,5 @@
 import { Collection } from 'mongodb';
-import Mongo from '../db/MongoClient';
+import Mongo from '../models/MongoClient';
 import { MONGO_DB } from '../utils/constants';
 import logger from '../utils/logger';
 
@@ -33,7 +33,7 @@ const findOneFromCollection = async (collectionName: string, document: any) => {
 
 const updateOneFromCollection = async (collectionName: string, filter: any, doc: any) => {
     const collection = await getCollection(collectionName);
-    return (await collection.updateOne(filter,doc)).matchedCount;
+    return (await collection.updateOne(filter, { $set: { players: doc } })).matchedCount;
 }
 export {
     insertOneToCollection,

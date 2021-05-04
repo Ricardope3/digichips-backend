@@ -1,4 +1,4 @@
-import { createRoomEvent, deleteRoomEvent, joinRoomEvent } from "./events";
+import { createRoomEvent, deleteRoomEvent, joinRoomEvent,engageRoom } from "./events";
 import { Socket } from "socket.io";
 import logger from "../utils/logger";
 
@@ -12,6 +12,13 @@ const onClientConnection = (socket: Socket) => {
     });
     socket.on('join-room', (msg) => {
         joinRoomEvent(msg, socket);
+    });
+    socket.on('engage-room', (msg) => {
+        engageRoom(msg, socket);
+    });
+    socket.on('say-hello', (msg) => {
+        console.log(msg.socketId)
+        socket.emit('say-hello', { socketId: socket.id })
     });
 }
 

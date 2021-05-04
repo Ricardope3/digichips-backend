@@ -1,25 +1,24 @@
 import winston = require('winston')
 
 
-const myCustomLevels = {
-    levels: {
-        info: 0,
-        error: 1,
-        warning: 2,
-    },
-    colors: {
-        info: 'blue',
-        warning: 'yellow',
-        error: 'red'
-    }
+const colors = {
+    info: 'blue',
+    error: 'red',
+    warning: 'yellow',
 };
 
-winston.addColors(myCustomLevels.colors);
+winston.addColors(colors);
 const logger = winston.createLogger({
-    levels: myCustomLevels.levels,
     format: winston.format.combine(
-        winston.format.cli(),
         winston.format.colorize(),
+        winston.format.splat(),
+        winston.format.printf((debug) => {
+            const {
+                level, message, ...args
+            } = debug;
+            return `${level} ${message} ${Object.keys(args).length ? JSON.stringify(args, null, 2) : ''}`;
+        }),
+        winston.format.simple(),
     ),
     transports: [
         new winston.transports.Console(),

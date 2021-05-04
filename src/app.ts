@@ -5,20 +5,19 @@ import { PORT, serverOptions } from './utils/constants'
 import { Server } from "socket.io";
 import { onClientConnection } from './controllers/connection';
 import logger from './utils/logger'
-import Mongo from './db/MongoClient';
+import Mongo from './models/MongoClient';
 import { MongoClient } from 'mongodb';
-
+import { roomSeeder } from './seeders/seeder'
 const app = require("express")();
 const httpServer = createServer(app);
 const io = new Server(httpServer, serverOptions);
 
 io.on("connection", onClientConnection);
-
 let client: MongoClient;
 const server = httpServer.listen(PORT, async () => {
     logger.info(`Server started on port ${PORT}`);
     client = await Mongo.getClient();
-    logger.info(`Connected to mongoDB`)
+    logger.info(`Connected to mongoDB`);
 });
 
 const exitHandler = () => {

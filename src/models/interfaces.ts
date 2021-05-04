@@ -11,17 +11,36 @@ export interface Player {
 export interface Room {
     _id: string;
     hostId: string;
+    pin: number;
     players: Player[];
 }
 
-export interface roomEventRequest {
+export interface createRoomEventRequest {
     playerId: string;
     playerUserName: string | undefined;
 }
 
+export interface deleteRoomEventRequest {
+    playerId: string;
+    newRoomPin: number | undefined;
+    playerUserName: string | undefined;
+}
+
+export type roomEventRequest =
+    createRoomEventRequest
+    & deleteRoomEventRequest;
+
 export interface joinRoomEventRequest {
-    roomId: string;
+    roomPin: string;
     playerId: string;
     playerUserName: string | undefined;
-    sourceSocketId: string;
 }
+export interface engageRoomRequest {
+    roomPin: string;
+    playerId: string;
+    playerUserName: string | undefined;
+}
+
+export type interactWithRoomRequest =
+    joinRoomEventRequest
+    & engageRoomRequest;
