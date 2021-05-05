@@ -21,8 +21,10 @@ const server = httpServer.listen(PORT, async () => {
 });
 
 const exitHandler = () => {
+
     if (server) {
         server.close(() => {
+            io.removeAllListeners();
             logger.info('Server closed');
             client.close();
             logger.info('MongoClient closed');

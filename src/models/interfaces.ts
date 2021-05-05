@@ -15,6 +15,10 @@ export interface Room {
     players: Player[];
 }
 
+export interface Bet {
+    amount: Chip;
+}
+
 export interface createRoomEventRequest {
     playerId: string;
     playerUserName: string | undefined;
@@ -28,19 +32,26 @@ export interface deleteRoomEventRequest {
 
 export type roomEventRequest =
     createRoomEventRequest
-    & deleteRoomEventRequest;
+    | deleteRoomEventRequest;
 
 export interface joinRoomEventRequest {
-    roomPin: string;
+    roomPin: number;
     playerId: string;
     playerUserName: string | undefined;
 }
 export interface engageRoomRequest {
-    roomPin: string;
+    roomPin: number;
     playerId: string;
     playerUserName: string | undefined;
 }
 
 export type interactWithRoomRequest =
     joinRoomEventRequest
-    & engageRoomRequest;
+    | engageRoomRequest;
+
+export interface betRequest {
+    roomPin: number;
+    playerId: string;
+    playerUserName: string | undefined;
+    bet: Bet;
+}
