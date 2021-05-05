@@ -16,6 +16,9 @@ const onClientConnection = (socket: Socket) => {
     socket.on('engage-room', (msg) => {
         engageRoom(msg, socket);
     });
+    socket.on('say-hello', () => {
+        socket.emit('say-hello', { socketId: socket.id })
+    });
     socket.on('bet', (msg) => {
         bet(msg, socket);
     });
